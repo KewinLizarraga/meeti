@@ -1,9 +1,10 @@
 const express = require('express');
-const meet = require('../controller/meet');
+const homeController = require('../controller/homeController');
+const usuariosController = require('../controller/usuariosController');
 
 const router = express.Router();
 
-router.get('/', meet.inicio);
-router.get('/crear-cuenta', meet.crearCuenta);
+router.get('/', homeController.home);
+router.get('/crear-cuenta', usuariosController.formCrearCuenta);
 
 module.exports = router;
