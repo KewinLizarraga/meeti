@@ -1,7 +1,7 @@
 require('dotenv').config({ path: 'variables.env' });
 const express = require('express');
 const bodyParser = require('body-parser');
-var expressLayouts = require('express-ejs-layouts');
+const expressLayouts = require('express-ejs-layouts');
 const path = require('path');
 const flash = require('connect-flash');
 const session = require('express-session');
@@ -11,6 +11,8 @@ const passport = require('./config/passport');
 const router = require('./routes');
 const db = require('./config/db');
 require('./models/Usuarios');
+require('./models/Categorias');
+require('./models/Grupos');
 
 db.sync()
   .then(() => console.log('La conexión se ha establecido con éxito.'))
