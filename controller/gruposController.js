@@ -1,4 +1,6 @@
 const { sanitizeBody } = require('express-validator');
+const multer = require('multer');
+const shortid = require('shortid');
 const Categorias = require('../models/Categorias');
 const Grupos = require('../models/Grupos');
 
@@ -19,6 +21,10 @@ module.exports = {
     grupo.usuarioId = req.user.id;
     grupo.categoriaId = grupo.categoria;
 
+    if (req.file) {
+      grupo.imagen = req.file.filename;
+    }
+
     try {
       await Grupos.create(grupo);
       req.flash('exito', 'Se ha creado el grupo correctamente');
@@ -28,5 +34,46 @@ module.exports = {
       req.flash('error', erroresSequelize);
       res.redirect('/nuevo-grupo');
     }
+  },
+  subirImagen: (req, res, next) => {
+    upload(req, res, function (error) {
+      if (error) {
+        if (error instanceof multer.MulterError) {
+          if (error.code === 'LIMIT_FILE_SIZE') {
+            req.flash('error', 'El archivo es muy grande');
+          } else {
+            req.flash('error', error.message);
+          }
+        } else if (error.hasOwnProperty('message')) {
+          req.flash('error', error.message);
+        }
+        res.redirect('back');
+        return;
+      } else {
+        next();
+      }
+    })
+  },
+}
+
+const configuracionMulter = {
+  limits: { fileSize: 100000 },
+  storage: fileStorage = multer.diskStorage({
+    destination: (req, file, next) => {
+      next(null, __dirname + '/../public/uploads/grupos/');
+    },
+    filename: (req, file, next) => {
+      const extension = file.mimetype.split('/')[1];
+      next(null, `${shortid.generate()}.${extension}`);
+    }
+  }),
+  fileFilter: (req, file, next) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+      next(null, true);
+    } else {
+      next(new Error('Formato no válido'), false);
+    }
   }
 }
+
+const upload = multer(configuracionMulter).single('imagen');

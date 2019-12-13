@@ -18,6 +18,6 @@ router.post('/iniciar-sesion', authController.autenticarUsuario);
 router.get('/administracion', authController.usuarioAuntenticado, adminController.panelAdministracion);
 
 router.get('/nuevo-grupo', authController.usuarioAuntenticado, gruposController.formNuevoGrupo);
-router.post('/nuevo-grupo', gruposController.crearGrupo);
+router.post('/nuevo-grupo', gruposController.subirImagen, gruposController.crearGrupo);
 
 module.exports = router;
