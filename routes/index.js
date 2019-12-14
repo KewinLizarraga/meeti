@@ -4,6 +4,7 @@ const usuariosController = require('../controller/usuariosController');
 const authController = require('../controller/authController');
 const adminController = require('../controller/adminController');
 const gruposController = require('../controller/gruposController');
+const meetiController = require('../controller/meetiController');
 const validator = require('../controller/validator');
 
 const router = express.Router();
@@ -25,5 +26,7 @@ router.get('/imagen-grupo/:grupoId', authController.usuarioAuntenticado, gruposC
 router.post('/imagen-grupo/:grupoId', authController.usuarioAuntenticado, gruposController.subirImagen, gruposController.editarImagen);
 router.get('/eliminar-grupo/:grupoId', authController.usuarioAuntenticado, gruposController.formEliminarGrupo);
 router.post('/eliminar-grupo/:grupoId', authController.usuarioAuntenticado, gruposController.eliminarGrupo);
+
+router.get('/nuevo-meeti', authController.usuarioAuntenticado, meetiController.formNuevoMeeti);
 
 module.exports = router;
