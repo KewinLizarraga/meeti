@@ -7,9 +7,9 @@
       <select name="grupoId">
         <option value="" disabled selected>-- Selecciona Grupo --</option>
         <% if (grupos.length > 0) { %>
-          <% grupos.forEach(grupo => { %>
-            <option value="<%= grupo.id %>"><%= grupo.nombre %></option>
-          <% }); %>
+        <% grupos.forEach(grupo => { %>
+        <option value="<%= grupo.id %>"><%= grupo.nombre %></option>
+        <% }); %>
         <% } %>
       </select>
     </div>
@@ -51,6 +51,12 @@
         <small>El asistente colocará una dirección estimada</small>
       </div>
     </div>
+
+    <div class="campo mapa">
+      <div id="mapa"></div>
+      <p class="informacion">Mueve el Pin hacia el punto exacto en caso de ser necesario</p>
+    </div>
+
     <p class="informacion">Confirma que los siguientes campos sean correctos</p>
     <div class="campo">
       <label>Dirección</label>
@@ -68,14 +74,8 @@
       <label>País</label>
       <input type="text" name="pais" id="pais" placeholder="País">
     </div>
-    <div class="campo">
-      <label>Latitud</label>
-      <input type="text" name="lat" id="lat">
-    </div>
-    <div class="campo">
-      <label>Longitud</label>
-      <input type="text" name="lng" id="lng">
-    </div>
+    <input type="hidden" id="lat" name="lat">
+    <input type="hidden" id="lng" name="lng">
     <div class="campo enviar">
       <input type="submit" value="Crear Meeti" class="btn btn-rosa">
     </div>
